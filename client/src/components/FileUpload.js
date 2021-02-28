@@ -75,7 +75,7 @@ const FileUpload = () => {
             ) : null}
             <div>
                 generated .MID file
-                <ReactMidiPlayerDemo url={`http://localhost:3000/uploads/happy_birthday.mid`} />
+                <ReactMidiPlayerDemo url={`http://localhost:3000/uploads/Mozart_Wolfgang_Amadeus_-_Mozart_Symphony_No._31_KV_297_Paris_D_major.mid`} />
             </div>
             
         </Fragment>

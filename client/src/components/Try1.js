@@ -204,24 +204,9 @@ class TinyReactMidiPlayer extends React.Component {
         possibleChannels: []
       };
 
-      this.addChannel = this.addChannel.bind(this)
-
-      
-      this.midiPlayer = new MidiPlayer.Player(function(event) {
-        const {
-            channel
-        } = event;
-
-        this.addChannel(channel);
-        
-        console.log(event);
-      });
+      this.midiPlayer = new MidiPlayer.Player();
       
     }
-
-    addChannel ({ channel })  {
-        console.log(`add channel`);
-    };
     
     async componentDidMount() {
       const { url } = this.props;
@@ -230,9 +215,31 @@ class TinyReactMidiPlayer extends React.Component {
       this.midiPlayer.loadArrayBuffer(midi);
       
       this.midiPlayer.on("midiEvent", midiEvent => {
+        const this_midi_event = midiEvent;
+        const {
+          channel,
+          noteName,
+          track,
+          name: midiEventType
+        } = this_midi_event;
+
+      if (channel in this.state.possibleChannels) {
+          console.log(`${channel} in possiblechannels`);
+      } else {
+        var updated_channel_array = this.state.possibleChannels;
+        var updated_channel_set = new Set(updated_channel_array);
+        if (typeof channel !== 'undefined') {
+            // the variable is defined
+            updated_channel_set.add(channel);
+            updated_channel_array = Array.from(updated_channel_set);
+            this.setState({
+                areInstrumentsLoaded: true,
+                possibleChannels: updated_channel_array
+            });
+        }
         
-        console.log('heyyo');
-        console.log('hell github');
+      }
+      console.log('done updating midiPlayer property');
         
       });
     }
@@ -279,7 +286,7 @@ class ReactMidiPlayerDemo extends React.Component {
     return (
       <div>
         ReactMidiPlayerDemo Playing url : {url}
-        <ReactMidiPlayer url={url} />
+        <TinyReactMidiPlayer url={url} />
       </div>
     );
   }
