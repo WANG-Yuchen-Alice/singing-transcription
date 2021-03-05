@@ -7,7 +7,8 @@ import soundfontPlayer from "soundfont-player";
 import { getInstrumentName } from "./get-instrument-name";
 import {
   getInstrument,
-  loadInstruments
+  loadInstruments,
+  loadCheckedInstruments
 } from "./load-instrument";
 
 import MidiPlayer from "midi-player-js";
@@ -119,21 +120,9 @@ class ReactMidiPlayer extends React.Component {
         key,
         channel
       } = payload;
-      console.log('heyyo');
-      if (channel in instruments) {
-          console.log(`${channel} in!!!`);
-      } else {
-          console.log(`${channel} not in!!!`);
-      }
-      if (!channel in instruments) {
-        console.error(`${instrumentName} not loaded`);
-        console.log(`${channel} not in`);
-        return;
-      }
+      
       switch (type) {
         case "NOTE_ON": {
-          console.log(instruments[channel]);
-          console.log(channel);
           if (channel in instruments) {
               playNote({
                 instrument: instruments[channel],
@@ -196,7 +185,7 @@ ReactMidiPlayer.defaultProps = {
   midiPlayerState: ""
 };
 
-class TinyReactMidiPlayer extends React.Component {
+class TinyReactMidiLoader extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
@@ -205,43 +194,83 @@ class TinyReactMidiPlayer extends React.Component {
       };
 
       this.midiPlayer = new MidiPlayer.Player();
+      this.midiPlayer_player = new MidiPlayer.Player();
       
     }
     
     async componentDidMount() {
-      const { url } = this.props;
-      const midi = await loadMidi(url);
-      console.log(midi);
-      this.midiPlayer.loadArrayBuffer(midi);
+        const { url } = this.props;
+        const midi = await loadMidi(url);
+        //console.log(midi);
+        this.midiPlayer.loadArrayBuffer(midi);
+        this.midiPlayer_player.loadArrayBuffer(midi);
       
-      this.midiPlayer.on("midiEvent", midiEvent => {
-        const this_midi_event = midiEvent;
-        const {
-          channel,
-          noteName,
-          track,
-          name: midiEventType
-        } = this_midi_event;
+        this.midiPlayer.on("midiEvent", midiEvent => {
+            const this_midi_event = midiEvent;
+            const {
+                channel,
+                noteName,
+                track,
+                name: midiEventType
+            } = this_midi_event;
 
-      if (channel in this.state.possibleChannels) {
-          console.log(`${channel} in possiblechannels`);
-      } else {
-        var updated_channel_array = this.state.possibleChannels;
-        var updated_channel_set = new Set(updated_channel_array);
-        if (typeof channel !== 'undefined') {
-            // the variable is defined
-            updated_channel_set.add(channel);
-            updated_channel_array = Array.from(updated_channel_set);
-            this.setState({
-                areInstrumentsLoaded: true,
-                possibleChannels: updated_channel_array
+            if (channel in this.state.possibleChannels) {
+                console.log(`${channel} in possiblechannels`);
+            } else {
+                var updated_channel_array = this.state.possibleChannels;
+                var updated_channel_set = new Set(updated_channel_array);
+                if (typeof channel !== 'undefined') {
+                    // the variable is defined
+                    updated_channel_set.add(channel);
+                    updated_channel_array = Array.from(updated_channel_set);
+                    this.setState({
+                        areInstrumentsLoaded: true,
+                        possibleChannels: updated_channel_array
+                    });
+                } 
+            }
+        });
+        
+    }
+
+    async componentDidUpdate(prevProps, prevState) {
+        if (this.state.possibleChannels.length !== prevState.possibleChannels.length) {
+            console.log("possible channel length updated");
+            const instruments_player = await loadCheckedInstruments(this.state.possibleChannels);
+            this.midiPlayer_player.on("midiEvent", midiEvent => {
+                const action = midiEventsToNoteActions(midiEvent);
+                if (action === null) return;
+                const { payload, type } = action;
+                const {
+                  instrumentName,
+                  noteName,
+                  key,
+                  channel
+                } = payload;
+                
+                switch (type) {
+                  case "NOTE_ON": {
+                    if (channel in instruments_player) {
+                        playNote({
+                          instrument: instruments_player[channel],
+                          noteName,
+                          noteKey: key
+                        });
+                        
+                    } else {
+                      console.log(`NOTE ON ${channel} not in`);
+                    }
+                    
+                  }
+                  case "NOTE_OFF": {
+                    console.log("Left as an exercise to the reader");
+                  }
+                  default: {
+                    return;
+                  }
+                }
             });
         }
-        
-      }
-      console.log('done updating midiPlayer property');
-        
-      });
     }
 
     render() {
@@ -255,19 +284,33 @@ class TinyReactMidiPlayer extends React.Component {
                   this.midiPlayer.play();
                 }}
               >
+                Load
+              </button>
+              <button
+                onClick={() => {
+                  this.midiPlayer.stop();
+                  console.log(this.state.possibleChannels);
+                }}
+              >
+                Stop_Load
+              </button>
+              <button
+                onClick={() => {
+                  this.midiPlayer_player.play();
+                }}
+              >
                 Play
               </button>
               <button
                 onClick={() => {
-                  this.midiPlayer.pause();
+                  this.midiPlayer_player.pause();
                 }}
               >
                 Pause
               </button>
               <button
                 onClick={() => {
-                  this.midiPlayer.stop();
-                  console.log(this.state.possibleChannels);
+                  this.midiPlayer_player.stop();
                 }}
               >
                 Stop
@@ -279,14 +322,15 @@ class TinyReactMidiPlayer extends React.Component {
         </div>
       );
     }
-  }
+}
+
 class ReactMidiPlayerDemo extends React.Component {
   render() {
     const { url } = this.props;
     return (
       <div>
         ReactMidiPlayerDemo Playing url : {url}
-        <TinyReactMidiPlayer url={url} />
+        <TinyReactMidiLoader url={url} />
       </div>
     );
   }

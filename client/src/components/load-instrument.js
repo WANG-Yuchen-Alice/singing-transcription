@@ -56,9 +56,9 @@ export const getInstrument = (
 };
 
 export const loadInstruments = midiPlayer => {
-  const instruments = midiPlayer.instruments;
+  //const instruments = midiPlayer.instruments;
   //const instruments = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
-  //const instruments = [1];
+  const instruments = [1];
   console.log(instruments);
   console.log(typeof(instruments));
   const instrumentNames = instruments.map(instr =>
@@ -87,3 +87,34 @@ export const loadInstruments = midiPlayer => {
       .catch(reject);
   });
 };
+
+export const loadCheckedInstruments = possibleChannels => {
+    const instruments = possibleChannels;
+    console.log(instruments);
+
+    const instrumentNames = instruments.map(instr =>
+      getInstrumentName(instr)
+    );
+    console.log(instrumentNames);
+    const loadInstruments = instrumentNames.map(
+      instrumentName => getInstrument(instrumentName)
+    );
+  
+    return new Promise((resolve, reject) => {
+      const loadAllInstruments = Promise.all(loadInstruments);
+      loadAllInstruments
+        .then(playableInstrumentsArray => {
+          const indexedInstruments = playableInstrumentsArray.reduce(
+            (accumulator, currentInstrument, i) => {
+              const currentInstrumentChannel = instruments[i];
+              return Object.assign({}, accumulator, {
+                [currentInstrumentChannel]: currentInstrument
+              });
+            },
+            {}
+          );
+          resolve(indexedInstruments);
+        })
+        .catch(reject);
+    });
+  };
