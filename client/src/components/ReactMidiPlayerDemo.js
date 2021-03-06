@@ -330,7 +330,7 @@ class ReactMidiPlayerDemo extends React.Component {
     return (
       <div>
         ReactMidiPlayerDemo Playing url : {url}
-        <TinyReactMidiLoader url={url} />
+        <ReactMidiPlayer url={url} />
       </div>
     );
   }

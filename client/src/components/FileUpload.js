@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react'
 import axios from 'axios';
 import MidiPlayer from "midi-player-js";
 
-import ReactMidiPlayerDemo from "./Try1"
+import ReactMidiPlayerDemo from "./ReactMidiPlayerDemo"
 
 const FileUpload = () => {
     const [file, setFile] = useState('');
@@ -22,13 +22,6 @@ const FileUpload = () => {
         e.preventDefault();
         const formData = new FormData();
         formData.append('file', file);
-
-        //Player.loadFile('https://raw.githubusercontent.com/grimmdude/MidiPlayerJS/master/demo/midi/zelda.mid');
-        //Player.play();
-
-        //file to array buffer https://www.npmjs.com/package/file-to-array-buffer
-        //=> file => buffer
-        //this.midiPlayer.loadArrayBuffer(midi);
 
         try {
             const res = await axios.post('http://localhost:5000/upload', formData, {
@@ -75,14 +68,15 @@ const FileUpload = () => {
             ) : null}
             <div>
                 generated .MID file
-                <ReactMidiPlayerDemo url={`http://localhost:3000/uploads/happy_birthday.mid`} />
+                <ReactMidiPlayerDemo url={`http://localhost:3000/uploads/My_Country.mid`} />
             </div>
             
         </Fragment>
     );
-}; //Mozart_Wolfgang_Amadeus_-_Mozart_Symphony_No._31_KV_297_Paris_D_major.mid
+}; 
+//Mozart_Wolfgang_Amadeus_-_Mozart_Symphony_No._31_KV_297_Paris_D_major.mid
+//Beethoven_Ludwig_van_-_Beethoven_Symphony_No._5_4th.mid
 //`http://localhost:3000/uploads/happy_birthday.mid`
-// {`file:///Users/yuchen/Desktop/file_upload/client/public/uploads/happy_birthday.mid`}
 //<ReactMidiPlayerDemo url={`https://raw.githubusercontent.com/grimmdude/MidiPlayerJS/master/demo/midi/zelda.mid`} />
 
 export default FileUpload;

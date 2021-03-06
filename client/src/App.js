@@ -1,7 +1,6 @@
 //import logo from './logo.svg';
 import React from 'react'; 
 import FileUpload from './components/FileUpload';
-import Try1 from './components/Try1';
 import './App.css';
 
 const App = () => (
