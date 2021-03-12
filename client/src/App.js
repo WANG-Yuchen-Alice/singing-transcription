@@ -16,15 +16,39 @@ import './App.css';
 // );
 
 const App = () => {
-    return (
+    const [page, setPage] = React.useState(0);
+
+    const getUploadPage = () => (
         <div className="container mt-4">
             <h4 className="display-4 text-center mb-4">
                 <i className="fab fa-react" /> Melody Transcription of Singing Voice
             </h4>
             <div>Please upload a .WAV file.</div>
 
-            <FileUpload />
-        </div>
+        <FileUpload />
+        </div>);
+
+    const getHomePage = () => (
+        <div className="container mt-4">
+            <h4 className="display-4 text-center mb-4">
+                Melody Transcription of Singing Voice
+            </h4>
+            <div>
+                CS4347 Project
+            </div>
+            <div>
+                Wang Yuchen
+            </div>
+
+        </div>);
+
+    return (
+        <>
+        <button onClick = {() => setPage(0)}>Upload</button>
+        <button onClick = {() => setPage(1)}>Home</button>
+        {page === 0 ? getUploadPage() : getHomePage()}
+        </>
+    
     )
 }
 
