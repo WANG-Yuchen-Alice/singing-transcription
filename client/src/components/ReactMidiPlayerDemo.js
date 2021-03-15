@@ -279,7 +279,6 @@ class TinyReactMidiLoader extends React.Component {
 
     async componentDidUpdate(prevProps, prevState) {
         if (this.state.possibleChannels.length !== prevState.possibleChannels.length) {
-            //console.log("possible channel length updated");
             console.log("------");
             console.log(this.state.possibleChannels);
             const instruments_player = await loadCheckedInstruments(this.state.possibleChannels);

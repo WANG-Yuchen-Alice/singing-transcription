@@ -51,7 +51,7 @@ const FileUpload = () => {
         <Fragment>
             <form onSubmit={onSubmit}>
                 <div className='custom-file mb-4'>
-                    <input type='file' className='custom-file-input' id='customFile' accept=".mid" onChange={onChange} />
+                    <input type='file' className='custom-file-input' id='customFile' accept=".mid,.png,.jpg" onChange={onChange} />
                     <label className='custom-file-label' htmlFor='customFile'>
                         {fileName}
                     </label>
@@ -62,14 +62,16 @@ const FileUpload = () => {
               <div className='row mt-5'>
                 <div className='col-md-6 m-auto'>
                     <h3 className='text-center'>{uploadedFile.fileName}</h3>
-                    <img style={{ width: '100%' }} src={uploadedFile.fileName} alt='' />
+                    <img style={{ width: '100%' }} src={uploadedFile.filePath} alt='' />
+                </div>
+                <div>
+                    generated .MID file
+                    <ReactMidiPlayerDemo url={`http://localhost:3000/uploads/happy_birthday.mid`} />
                 </div>
               </div>
+              
             ) : null}
-            <div>
-                generated .MID file
-                <ReactMidiPlayerDemo url={`http://localhost:3000/uploads/Beethoven_Ludwig_van_-_Beethoven_Symphony_No._5_4th.mid`} />
-            </div>
+            
             
         </Fragment>
     );

@@ -26,7 +26,9 @@ app.post('/upload', (req, res) => {
         //const file_url = URL.createObjectURL(file);
 
 
-        res.json({ fileName: file.name, filePath: `${__dirname}/client/public/uploads/${file.name}` });
+        //res.json({ fileName: file.name, filePath: `${__dirname}/client/public/uploads/${file.name}` });
+        res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
+
     });
 
 });
