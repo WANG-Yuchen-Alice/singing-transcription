@@ -28,14 +28,11 @@ const FileUpload = () => {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
-
             });
             const { fileName, filePath } = res.data;
 
             setUploadedFile({ fileName, filePath });
-
-            
-            
+           
         } catch(err) {
             console.log(err)
             if(err.response.status === 500) {
@@ -51,7 +48,7 @@ const FileUpload = () => {
         <Fragment>
             <form onSubmit={onSubmit}>
                 <div className='custom-file mb-4'>
-                    <input type='file' className='custom-file-input' id='customFile' accept=".mid,.png,.jpg" onChange={onChange} />
+                    <input type='file' className='custom-file-input' id='customFile' accept=".mid,.png,.jpg,.txt" onChange={onChange} />
                     <label className='custom-file-label' htmlFor='customFile'>
                         {fileName}
                     </label>
@@ -63,22 +60,37 @@ const FileUpload = () => {
                 <div className='col-md-6 m-auto'>
                     <h3 className='text-center'>{uploadedFile.fileName}</h3>
                     <img style={{ width: '100%' }} src={uploadedFile.filePath} alt='' />
-                </div>
-                <div>
-                    generated .MID file
-                    <ReactMidiPlayerDemo url={`http://localhost:3000/uploads/happy_birthday.mid`} />
+                    {uploadedFile.fileName === undefined ? (
+                        <div> fileName undefined</div>
+                    ) : (
+                        <button
+                        type="button"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            window.location.href=`http://localhost:3000/uploads/${uploadedFile.fileName}`;
+                    }}
+                  > view generated file</button>
+                    )}
+                    
                 </div>
               </div>
               
             ) : null}
+            <div>
+                <div>generated .MID file</div>
+                {uploadedFile.filePath}
+                <ReactMidiPlayerDemo url={`http://localhost:3000/uploads/happy_birthday.mid`} />
+                    
+            </div>
             
             
         </Fragment>
     );
 }; 
+//<ReactMidiPlayerDemo url={`http://localhost:3000/uploads/happy_birthday.mid`} />
 //Mozart_Wolfgang_Amadeus_-_Mozart_Symphony_No._31_KV_297_Paris_D_major.mid
 //Beethoven_Ludwig_van_-_Beethoven_Symphony_No._5_4th.mid
 //`http://localhost:3000/uploads/happy_birthday.mid`
 //<ReactMidiPlayerDemo url={`https://raw.githubusercontent.com/grimmdude/MidiPlayerJS/master/demo/midi/zelda.mid`} />
-
+//http://localhost:3000/uploads/text1.txt
 export default FileUpload;
