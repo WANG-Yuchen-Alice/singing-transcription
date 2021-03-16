@@ -21,9 +21,11 @@ const App = () => {
     const getUploadPage = () => (
         <div className="container mt-4">
             <h4 className="display-4 text-center mb-4">
-                <i className="fab fa-react" /> Melody Transcription of Singing Voice
+                <i className="fas fa-headphones-alt" /> Melody Transcription of Singing Voice
             </h4>
-            <div>Please upload a .WAV file.</div>
+            <div>
+                <i class="fas fa-file-audio" />  Please upload a .WAV file.
+            </div>
 
         <FileUpload />
         </div>);

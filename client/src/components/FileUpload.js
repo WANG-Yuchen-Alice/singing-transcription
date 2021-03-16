@@ -68,13 +68,10 @@ const FileUpload = () => {
                         onClick={(e) => {
                             e.preventDefault();
                             window.location.href=`http://localhost:3000/uploads/${uploadedFile.fileName}`;
-                    }}
-                  > view generated file</button>
-                    )}
-                    
+                        }}> view generated file</button>
+                    )}               
                 </div>
-              </div>
-              
+              </div>          
             ) : null}
             <div>
                 <div>generated .MID file</div>
