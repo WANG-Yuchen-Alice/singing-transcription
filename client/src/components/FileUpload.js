@@ -24,15 +24,28 @@ const FileUpload = () => {
         formData.append('file', file);
 
         try {
-            const res = await axios.post('http://localhost:5000/upload', formData, {
+            // const res = await axios.post('http://localhost:5000/upload', formData, {
+            //     headers: {
+            //         'Content-Type': 'multipart/form-data'
+            //     }
+            // });
+            // const { fileName, filePath, dummy } = res.data;
+            // console.log(res.data);
+            // console.log(fileName);
+            // console.log(dummy);
+
+            //,then
+            axios.post('http://localhost:5000/upload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
-            });
-            const { fileName, filePath } = res.data;
-
-            setUploadedFile({ fileName, filePath });
-           
+            }).then(res=>{
+                const { fileName, filePath, dummy } = res.data;
+                console.log(res.data);
+                console.log(fileName);
+                console.log(dummy);  
+                setUploadedFile({ fileName, filePath });     
+            })
         } catch(err) {
             console.log(err)
             if(err.response.status === 500) {
@@ -40,7 +53,6 @@ const FileUpload = () => {
             } else {
                 console.log(err.response.data.msg);
             }
-
         }
     };
 
@@ -59,23 +71,25 @@ const FileUpload = () => {
               <div className='row mt-5'>
                 <div className='col-md-6 m-auto'>
                     <h3 className='text-center'>{uploadedFile.fileName}</h3>
+                    {uploadedFile.filePath}
                     <img style={{ width: '100%' }} src={uploadedFile.filePath} alt='' />
                     {uploadedFile.fileName === undefined ? (
                         <div> fileName undefined</div>
                     ) : (
+                        <div>
                         <button
                         type="button"
                         onClick={(e) => {
                             e.preventDefault();
                             window.location.href=`http://localhost:3000/uploads/${uploadedFile.fileName}`;
                         }}> view generated file</button>
+                        </div>
                     )}               
                 </div>
               </div>          
             ) : null}
             <div>
                 <div>generated .MID file</div>
-                {uploadedFile.filePath}
                 <ReactMidiPlayerDemo url={`http://localhost:3000/uploads/happy_birthday.mid`} />
                     
             </div>
