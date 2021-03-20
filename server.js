@@ -54,6 +54,7 @@ app.post('/upload', (req, res) => {
         try {
             if (fs.existsSync(path)) {
                 console.log("right after python: output exists");
+                res.json({ fileName: "output.txt", filePath: `/uploads/output.txt`, dummy: 'Hey Yo' });
             } else {
                 console.log("right after python: file not exists yet");
             }
@@ -83,7 +84,7 @@ app.post('/upload', (req, res) => {
             console.error("err")
     }
     //res.json({ fileName: file.name, filePath: `/uploads/${file.name}`, dummy: 'Hey Yo' });
-    res.json({ fileName: "output.txt", filePath: `/uploads/output.txt`, dummy: 'Hey Yo' });
+   
     //res.json({ fileName: "what", filePath: dataToSend, dummy: "hey"});
 
 });
