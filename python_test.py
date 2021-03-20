@@ -21,4 +21,24 @@ from csv import writer
 #     score = list_items[n].find('span').get_text().strip() 
 #     csv_writer.writerow([name, score]) 
 #     n = n + 1
-print("csv file created for leetcode") 
+
+raw_address = sys.argv[-3]
+client_address = sys.argv[-2]
+file_name = sys.argv[-1]
+
+input_address = raw_address + file_name
+output_address = client_address + "output.txt"
+
+#input file
+fin = open(input_address, "rt")
+#output file to write the result to
+fout = open(output_address, "wt")
+#for each line in the input file
+for line in fin:
+	#read replace the string and write to output file
+	fout.write(line + " modified ")
+#close input and output files
+fin.close()
+fout.close()
+
+print(output_address)
