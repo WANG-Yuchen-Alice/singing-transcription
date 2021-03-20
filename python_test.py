@@ -2,6 +2,7 @@ import sys
 import requests 
 from bs4 import BeautifulSoup  
 from csv import writer 
+import time
 # bs4 module for web scraping and requests for making HTTPS requests using Python. 
 # response = requests.get('https://leetcode.com / shubhamk314') 
 # soup = BeautifulSoup(response.text, 'html.parser') 
@@ -32,6 +33,8 @@ output_address = client_address + "output.txt"
 #input file
 fin = open(input_address, "rt")
 #output file to write the result to
+
+time.sleep(5) 
 fout = open(output_address, "wt")
 #for each line in the input file
 for line in fin:
