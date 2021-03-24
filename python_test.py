@@ -27,9 +27,9 @@ raw_address = sys.argv[-3]
 client_address = sys.argv[-2]
 file_name = sys.argv[-1]
 
+output_name = file_name + "_output.txt"
 input_address = raw_address + file_name
-output_address = client_address + "output.txt"
-
+output_address = client_address + output_name
 #input file
 fin = open(input_address, "rt")
 #output file to write the result to
