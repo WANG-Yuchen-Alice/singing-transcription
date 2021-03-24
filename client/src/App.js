@@ -21,7 +21,7 @@ const App = () => {
     const getUploadPage = () => (
         <div className="container mt-4">
             <h4 className="display-4 text-center mb-4">
-                <i className="fas fa-headphones-alt" /> Melody Transcription of Singing Voice
+                <i className="fas fa-headphones-alt" /> Singing Transcription
             </h4>
             <div>
                 <i class="fas fa-file-audio" />  Please upload a .WAV file.
@@ -33,21 +33,21 @@ const App = () => {
     const getHomePage = () => (
         <div className="container mt-4">
             <h4 className="display-4 text-center mb-4">
-                Melody Transcription of Singing Voice
+                Welcome to Singing Transcription
             </h4>
             <div>
                 CS4347 Project
             </div>
             <div>
-                Wang Yuchen
+                Wang Yuchen 
             </div>
 
         </div>);
 
     return (
         <>
-        <button onClick = {() => setPage(0)}>Upload</button>
-        <button onClick = {() => setPage(1)}>Home</button>
+        <button className='btn btn-dark' onClick = {() => setPage(0)}>Upload</button>
+        <button className='btn btn-dark ml-2' onClick = {() => setPage(1)}>Home</button>
         {page === 0 ? getUploadPage() : getHomePage()}
         </>
     

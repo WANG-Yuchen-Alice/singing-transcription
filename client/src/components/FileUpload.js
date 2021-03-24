@@ -9,7 +9,7 @@ const FileUpload = () => {
     const [fileName, setFilename] = useState('Choose File');
     const [uploadedFile, setUploadedFile] = useState({});
 
-    const Player = new MidiPlayer.Player(function(event) {
+    const Player = new MidiPlayer.Player(function (event) {
         console.log(event);
     });
 
@@ -39,16 +39,16 @@ const FileUpload = () => {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
-            }).then(res=>{
+            }).then(res => {
                 const { fileName, filePath, dummy } = res.data;
                 console.log(res.data);
                 console.log(fileName);
-                console.log(dummy);  
-                setUploadedFile({ fileName, filePath });     
+                console.log(dummy);
+                setUploadedFile({ fileName, filePath });
             })
-        } catch(err) {
+        } catch (err) {
             console.log(err)
-            if(err.response.status === 500) {
+            if (err.response.status === 500) {
                 console.log('There was a problem with the server');
             } else {
                 console.log(err.response.data.msg);
@@ -65,39 +65,42 @@ const FileUpload = () => {
                         {fileName}
                     </label>
                 </div>
-                <input type='submit' value='Upload' className='btn btn-primary btn-block mt-4' />
+                <input type='submit' value='Upload' className='btn btn-dark btn-block mt-4' />
             </form>
             {uploadedFile ? (
-              <div className='row mt-5'>
-                <div className='col-md-6 m-auto'>
-                    <h3 className='text-center'>{uploadedFile.fileName}</h3>
-                    {uploadedFile.filePath}
-                    <img style={{ width: '100%' }} src={uploadedFile.filePath} alt='' />
-                    {uploadedFile.fileName === undefined ? (
-                        <div> fileName undefined</div>
-                    ) : (
-                        <div>
-                        <button
-                        type="button"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            window.location.href=`http://localhost:3000/uploads/${uploadedFile.fileName}`;
-                        }}> view generated file</button>
-                        </div>
-                    )}               
+                <div className='row mt-5'>
+                    <div className='col-md-6 m-auto'>
+                        <h3 className='text-center'>{uploadedFile.fileName}</h3>
+                        {uploadedFile.filePath}
+                        <img style={{ width: '100%' }} src={uploadedFile.filePath} alt='' />
+                        {uploadedFile.fileName !== undefined ? (
+                            <div>
+                                {uploadedFile.fileName.slice(uploadedFile.fileName.length - 4, uploadedFile.fileName.length) == ".txt" ? (
+                                    <div>
+                                        <button
+                                            type="button"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                window.location.href = `http://localhost:3000/uploads/${uploadedFile.fileName}`;
+                                            }}> view generated file</button>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <div>generated .MID file</div>
+                                        {uploadedFile.fileName}
+                                        <ReactMidiPlayerDemo url={`http://localhost:3000/uploads/${uploadedFile.fileName}`} />
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            <div> Generated file will appeal here :) </div>
+                        )}
+                    </div>
                 </div>
-              </div>          
             ) : null}
-            <div>
-                <div>generated .MID file</div>
-                <ReactMidiPlayerDemo url={`http://localhost:3000/uploads/happy_birthday.mid`} />
-                    
-            </div>
-            
-            
         </Fragment>
     );
-}; 
+};
 //<ReactMidiPlayerDemo url={`http://localhost:3000/uploads/happy_birthday.mid`} />
 //Mozart_Wolfgang_Amadeus_-_Mozart_Symphony_No._31_KV_297_Paris_D_major.mid
 //Beethoven_Ludwig_van_-_Beethoven_Symphony_No._5_4th.mid
