@@ -39,6 +39,12 @@ const App = () => {
                 CS4347 Project
             </div>
             <div>
+                Jin Minjia 
+            </div>
+            <div>
+                Liu Hongfu 
+            </div>
+            <div>
                 Wang Yuchen 
             </div>
 

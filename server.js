@@ -54,7 +54,7 @@ app.post('/upload', (req, res) => {
         console.log("text file moved to raw folder");
         //check file exists
         const fs = require('fs')
-        const path = `${__dirname}/client/public/uploads/output.txt`
+        const path = `${__dirname}/client/public/uploads/${file.name}`
 
         //run python script
         let options = {
@@ -71,7 +71,7 @@ app.post('/upload', (req, res) => {
             try {
                 if (fs.existsSync(path)) {
                     console.log("right after python: output exists");
-                    res.json({ fileName: `${file.name}_output.txt`, filePath: `/uploads/output.txt`, dummy: 'Hey Yo' });
+                    res.json({ fileName: `${file.name}`, filePath: `/uploads/${file.name}`, dummy: 'Hey Yo' });
                 } else {
                     console.log("right after python: file not exists yet");
                 }

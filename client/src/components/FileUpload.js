@@ -78,7 +78,7 @@ const FileUpload = () => {
                                 {uploadedFile.fileName.slice(uploadedFile.fileName.length - 4, uploadedFile.fileName.length) == ".txt" ? (
                                     <div>
                                         <button
-                                            type="button"
+                                            type="button" className='btn btn-dark'
                                             onClick={(e) => {
                                                 e.preventDefault();
                                                 window.location.href = `http://localhost:3000/uploads/${uploadedFile.fileName}`;

@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup  
 from csv import writer 
 import time
+import shutil
 # bs4 module for web scraping and requests for making HTTPS requests using Python. 
 # response = requests.get('https://leetcode.com / shubhamk314') 
 # soup = BeautifulSoup(response.text, 'html.parser') 
@@ -27,21 +28,25 @@ raw_address = sys.argv[-3]
 client_address = sys.argv[-2]
 file_name = sys.argv[-1]
 
-output_name = file_name + "_output.txt"
+#output_name = file_name[:-4] + "_output.txt" #remove .txt and add _output.txt
 input_address = raw_address + file_name
-output_address = client_address + output_name
-#input file
-fin = open(input_address, "rt")
-#output file to write the result to
+#output_address = client_address + output_name
 
-time.sleep(5) 
+''' 
+# read the input file and write a modified version to the output dir
+fin = open(input_address, "rt")
+
+
 fout = open(output_address, "wt")
-#for each line in the input file
 for line in fin:
-	#read replace the string and write to output file
 	fout.write(line + " modified ")
 #close input and output files
 fin.close()
 fout.close()
+'''
 
-print(output_address)
+#move the input file to another folder
+time.sleep(3) 
+shutil.move(input_address, client_address)
+
+print(client_address)
