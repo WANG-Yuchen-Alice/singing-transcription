@@ -21,6 +21,7 @@
     "midi-player-js": "^2.0.13",
     "midi-sounds-react": "^1.2.54",
     "python-shell": "^2.0.3",
+    "react-audio-player": "^0.16.1",
     "react-router-dom": "^5.2.0"
   }
 }

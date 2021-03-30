@@ -60,7 +60,7 @@ const FileUpload = () => {
         <Fragment>
             <form onSubmit={onSubmit}>
                 <div className='custom-file mb-4'>
-                    <input type='file' className='custom-file-input' id='customFile' accept=".mid,.png,.jpg,.txt" onChange={onChange} />
+                    <input type='file' className='custom-file-input' id='customFile' accept=".mid,.txt,.mp3,.wav" onChange={onChange} />
                     <label className='custom-file-label' htmlFor='customFile'>
                         {fileName}
                     </label>
@@ -86,10 +86,19 @@ const FileUpload = () => {
                                     </div>
                                 ) : (
                                     <div>
-                                        <div>generated .MID file</div>
-                                        {uploadedFile.fileName}
-                                        <ReactMidiPlayerDemo url={`http://localhost:3000/uploads/${uploadedFile.fileName}`} />
+                                        {uploadedFile.fileName.slice(uploadedFile.fileName.length - 4, uploadedFile.fileName.length) == ".wav" ? (
+                                            <div>
+                                                wav player
+                                            </div>
+                                        ) : (
+                                            <div>
+                                                {uploadedFile.fileName}
+                                                <ReactMidiPlayerDemo url={`http://localhost:3000/uploads/${uploadedFile.fileName}`} />
+                                            </div>
+
+                                        )}
                                     </div>
+
                                 )}
                             </div>
                         ) : (
