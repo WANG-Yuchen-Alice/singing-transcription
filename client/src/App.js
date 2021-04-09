@@ -37,22 +37,33 @@ const App = () => {
                 <i className="fas fa-headphones-alt" /> Singing Transcription Demo
             </h4>
             <div>
-                A sample from the internet
+                <div>
+                    Original Singing File
+                </div>
+                <div>
+                    <ReactAudioPlayer
+                        src="https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_700KB.mp3"
+                        controls
+                    />
+                </div>
+                <div>
+                    Separated Singing Voice
+            </div>
+                <div>
+                    <ReactAudioPlayer
+                        src={`http://localhost:3000/uploads/demo_pieces/mp3B_cool.mp3`}
+                        controls
+                    />
+                </div>
             </div>
             <div>
-            <ReactAudioPlayer
-                src="https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_700KB.mp3"
-                controls
-            />
+                Transcribed File
             </div>
             <div>
-                A sample from the server
-            </div>
-            <div>
-            <ReactAudioPlayer
-                src= {`http://localhost:3000/uploads/mp3B_cool.mp3`}
-                controls
-            />
+                <ReactAudioPlayer
+                    src={`http://localhost:3000/uploads/demo_pieces/mp3B_cool.mp3`}
+                    controls
+                />
             </div>
 
         </div>);
