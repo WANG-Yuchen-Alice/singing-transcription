@@ -71,7 +71,6 @@ const FileUpload = () => {
                 <div className='row mt-5'>
                     <div className='col-md-6 m-auto'>
                         <h3 className='text-center'>{uploadedFile.fileName}</h3>
-                        {uploadedFile.filePath}
                         <img style={{ width: '100%' }} src={uploadedFile.filePath} alt='' />
                         {uploadedFile.fileName !== undefined ? (
                             <div>
@@ -92,7 +91,6 @@ const FileUpload = () => {
                                             </div>
                                         ) : (
                                             <div>
-                                                {uploadedFile.fileName}
                                                 <ReactMidiPlayerDemo url={`http://localhost:3000/uploads/${uploadedFile.fileName}`} />
                                             </div>
 
@@ -102,7 +100,7 @@ const FileUpload = () => {
                                 )}
                             </div>
                         ) : (
-                            <div> Generated file will appeal here :) </div>
+                            <div> Generated file will appear here :) </div>
                         )}
                     </div>
                 </div>

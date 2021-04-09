@@ -150,7 +150,6 @@ class ReactMidiPlayer extends React.Component {
             <div>
                 {this.state.areInstrumentsLoaded === true ? (
                     <div>
-                        Loaded
                         <button
                             onClick={() => {
                                 this.midiPlayer.play();
@@ -329,15 +328,14 @@ class TinyReactMidiLoader extends React.Component {
             <div>
                 {this.state.areInstrumentsLoaded === true ? (
                     <div>
-                        Loaded
-                        <button
+                        <div>
+                        <button className='btn btn-light'
                             onClick={() => {
                                 this.midiPlayer.play();
                             }}
                         >
-                            Load
-              </button>
-                        <button
+                            Load </button>
+                        <button className='btn btn-light ml-2'
                             onClick={() => {
                                 this.midiPlayer.stop();
                                 console.log(this.state.possibleChannels);
@@ -345,29 +343,30 @@ class TinyReactMidiLoader extends React.Component {
                                 this.configurePlayer(this.state.state_instruments);
                             }}
                         >
-                            Stop_Load
-              </button>
-                        <button
+                            Ready </button>
+                        
+                        <button className='btn btn-light ml-2'
                             onClick={() => {
                                 this.midiPlayer_player.play();
                             }}
                         >
                             Play
               </button>
-                        <button
+                        <button className='btn btn-light ml-2'
                             onClick={() => {
                                 this.midiPlayer_player.pause();
                             }}
                         >
                             Pause
               </button>
-                        <button
+                        <button className='btn btn-light ml-2'
                             onClick={() => {
                                 this.midiPlayer_player.stop();
                             }}
                         >
                             Stop
               </button>
+                    </div>
                     </div>
                 ) : (
                         "Loading Instruments"
@@ -382,7 +381,6 @@ class ReactMidiPlayerDemo extends React.Component {
         const { url } = this.props;
         return (
             <div>
-                ReactMidiPlayerDemo Playing url : {url}
                 <TinyReactMidiLoader url={url} />
             </div>
         );
