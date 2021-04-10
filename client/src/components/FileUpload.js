@@ -92,6 +92,23 @@ const FileUpload = () => {
                                         ) : (
                                             <div>
                                                 <ReactMidiPlayerDemo url={`http://localhost:3000/uploads/${uploadedFile.fileName}`} />
+                                                
+                                                <div>
+                                                    <button
+                                                        type="button" className='btn btn-dark'
+                                                        onClick={(e) => {
+                                                            e.preventDefault();
+                                                            window.location.href = `http://localhost:3000/uploads/${uploadedFile.fileName}`;
+                                                        }}> download midi </button>
+
+                                                        <button
+                                                        type="button" className='btn btn-dark ml-2'
+                                                        onClick={(e) => {
+                                                            e.preventDefault();
+                                                            window.location.href = `http://localhost:3000/uploads/${uploadedFile.fileName.slice(0, uploadedFile.fileName.length - 4)}.json`;
+                                                        }}> download json </button>
+                                                </div>
+
                                             </div>
 
                                         )}
