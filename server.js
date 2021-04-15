@@ -113,12 +113,13 @@ app.post('/upload', (req, res) => {
 
         trans_input = `${raw_address}${file.name}`
         trans_output = `${client_address}${generated_file_name}`
+        split_command = '-s'
 
         //run python script
         let options = {
             mode: 'text',
             pythonOptions: ['-u'], // get print results in real-time 
-            args: [trans_input, trans_output] //An argument which can be accessed in the script using sys.argv[1] 
+            args: [trans_input, trans_output, split_command] //An argument which can be accessed in the script using sys.argv[1] 
         };
 
         PythonShell.run('do_everything.py', options, function (err, result) {

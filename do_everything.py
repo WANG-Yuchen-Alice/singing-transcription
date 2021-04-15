@@ -139,7 +139,7 @@ if __name__ == '__main__':
     "-d" argement specifies the device (e.g. cuda:0) to use if cuda is available.
     If you specify "-d cpu", that means you disable the use of gpu even if cuda is available.
     """
-
+#python do_everything.py input output -s
     # print (time.time())
     parser = argparse.ArgumentParser()
     parser.add_argument('input', help="input audio/folder path")

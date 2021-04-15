@@ -34,6 +34,7 @@ class SeqDataset(Dataset):
         y, sr = librosa.core.load(wav_path, sr=None, mono=True)
         if sr != 44100:
             y = librosa.core.resample(y= y, orig_sr= sr, target_sr= 44100)
+            sr = 44100
         y = librosa.util.normalize(y)
 
         if do_svs == True:
